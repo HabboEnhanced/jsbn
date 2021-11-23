@@ -814,7 +814,7 @@
   }
 
   // (public) convert to bigendian byte array
-  function bnToByteArray() {
+  function bnToByteArray(unsigned) {
     var i = this.t,
       r = new Array();
     r[0] = this.s;
@@ -839,6 +839,12 @@
         if (k == 0 && (this.s & 0x80) != (d & 0x80)) ++k;
         if (k > 0 || d != this.s) r[k++] = d;
       }
+    }
+
+    if (unsigned) {
+        for (var i = 0; i < r.length; i++) {
+            r[i] = r[i] & 255;
+        }
     }
     return r;
   }
